@@ -1,3 +1,9 @@
+/**
+ * skiplist 出自Skip lists: a probabilistic alternative to balanced trees
+ * 本身是平衡树的一种备选方案，平衡树如红黑树可以实现OlogN时间复杂度的查询效率，
+ * 而调表skiplist查询的时间复杂度是O(n)。可以实现Set, sortedSet,map,sortedMap等数据结构。
+ * 其原理是通过跳跃节点进行查询，加快查询速度。目前使用的项目有 redis,bigtable。
+ * */
 package Skiplist;
 
 import java.util.ArrayList;
@@ -34,6 +40,10 @@ public class Skiplist<K,V> {
         }
     }
 
+    /**
+     * 查找的过程往右下方向查找，如果右边有节点，就往右查找，如果没有就往下查找。
+     * 其中往右查找的过程会跳跃中间高度小于当前高度的节点。
+     * */
     public V search(K key) {
         Node<K, V>node = head;
         for (int i = curLevel; i >= 0; --i) {
@@ -48,6 +58,10 @@ public class Skiplist<K,V> {
         return null;
     }
 
+    /**
+     * 插入的过程是，先进行查找，获取当前值对应的节点位置（跳表是有序的）
+     * 然后再随机设置当前节点的高度，并插入不同高度从左到右的节点。
+     * */
     boolean insert(K key, V value) {
         Node[] update = new Node[MAX_LEVEL];
         Node<K,V>node = head;
@@ -76,6 +90,10 @@ public class Skiplist<K,V> {
         return true;
     }
 
+    /**
+     * 删除的过程是，先进行查找，获取当前值对应的节点位置（跳表是有序的）
+     * 删除不同高度从左到右的节点。
+     * */
     boolean remove(K key) {
         Node[] update = new Node[MAX_LEVEL];
         Node<K,V>node = head;
