@@ -1,0 +1,52 @@
+public class MinSegmentTree {
+    int[] arr;
+    int n;
+    public MinSegmentTree(int[] arr) {
+        this.n = arr.length;
+        this.arr = new int[this.n*2];
+        for(int i=0;i<this.n;i++) {
+            this.arr[i+this.n] = arr[i];
+        }
+        for(int i=this.n-1;i>0;i--) {
+            this.arr[i] = Math.min(this.arr[2*i], this.arr[2*i+1]);
+        }
+    }
+    public void update(int i, int val) {
+        i+=this.n;
+        this.arr[i] = val;
+        while(i>1) {
+            i>>=1;
+            this.arr[i] = Math.min(this.arr[i*2+1], this.arr[i*2]);
+        }
+    }
+    // get min of region [l, r]
+    public int getMin(int l, int r) {
+        l+=this.n;
+        r+=this.n;
+        int min = Integer.MAX_VALUE;
+        while(l<=r) {
+            if((l&1) == 1) {
+                min = Math.min(min, this.arr[l]);
+                l++;
+            }
+            if((r&1) == 0) {
+                min = Math.min(min, this.arr[r]);
+                r--;
+            }
+            l>>=1;
+            r>>=1;
+        }
+        return min;
+    }
+    public static void main(String[] args) {
+        System.out.println("hello MinSegmentTree");
+        MinSegmentTree tree = new MinSegmentTree(new int[]{7,5,3,9,8,1,10});
+        System.out.println(tree.getMin(0,0)); // 7
+        System.out.println(tree.getMin(0,6)); // 1
+        System.out.println(tree.getMin(1,4)); // 3
+        System.out.println(tree.getMin(1,2)); // 3
+        System.out.println(tree.getMin(3,4)); // 8
+        tree.update(5,12);
+        System.out.println(tree.getMin(3,6)); // 8
+    }
+}
