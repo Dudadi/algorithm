@@ -1,64 +1,53 @@
-package Array;
-
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * 功能描述
- *
- * @since 2022-07-09
- */
 public class SumSegmentTree {
-    public static void main(String[] args) {
-        System.out.println("hello world!");
-        SumSegmentTree tree = new SumSegmentTree(new int[]{6,5,2,3,4});
-        System.out.println(tree.getRangeSum(0,2)); // 13
-        System.out.println(tree.getRangeSum(0,1)); // 11
-        System.out.println(tree.getRangeSum(3,4)); // 7
-    }
-
-    private List<Integer> minSegmentTree = new ArrayList<>();
+    int[] arr;
     int n;
     public SumSegmentTree(int[] arr) {
-        n = arr.length;
-        for(int i=0;i<n;i++) {
-            minSegmentTree.add(0);
+        this.n = arr.length;
+        this.arr = new int[n*2];
+        for(int i=0;i<this.n;i++) {
+            this.arr[i+this.n] = arr[i];
         }
-        for(int i=0;i<n;i++) {
-            minSegmentTree.add(arr[i]);
-        }
-        for(int i=n-1;i>0;i--) {
-            minSegmentTree.set(i, minSegmentTree.get(2*i)+ minSegmentTree.get(2*i+1));
+        for(int i=this.n-1;i>0;i--) {
+            this.arr[i] = this.arr[i*2] + this.arr[i*2+1];
         }
     }
     public void update(int i, int val) {
-        i += n;
-        minSegmentTree.set(i, val);
+        i+=this.n;
+        this.arr[i] = val;
         while(i>1) {
-            i =i>>1;
-            minSegmentTree.set(i, minSegmentTree.get(2*i)+ minSegmentTree.get(2*i+1));
+            i>>=1;
+            this.arr[i] = this.arr[i*2]+this.arr[i*2+1];
         }
     }
-    public int getRangeSum(int start, int end) {
-        int sum = 0;
-        start += n;
-        end += n;
-        while(start < end) {
-            if((start & 1) == 1) {
-                sum += minSegmentTree.get(start);
-                start++;
-            }
-            if((end & 1) == 0) {
-                sum += minSegmentTree.get(end);
-                end--;
-            }
-            start = start>>1;
-            end = end>>1;
-        }
-        if(start == end) {
-            sum += minSegmentTree.get(start);
-        }
 
+    public int getSum(int l, int r) {
+        l+=n;
+        r+=n;
+        int sum = 0;
+        while(l<=r) {
+            if((l&1) == 1) {
+                sum += this.arr[l];
+                l++;
+            }
+            if((r&1) == 0) {
+                sum += this.arr[r];
+                r--;
+            }
+            l>>=1;
+            r>>=1;
+        }
         return sum;
+    }
+
+    public static void main(String[] args) {
+        System.out.println("hello SumSegmentTree");
+
+        SumSegmentTree tree = new SumSegmentTree(new int[]{1,2,3,4,5});
+        System.out.println(tree.getSum(0,2)); // 6
+        System.out.println(tree.getSum(0,4)); // 15
+        System.out.println(tree.getSum(2,4)); // 12
+        tree.update(2, 10);
+        System.out.println(tree.getSum(2, 4)); //19
+
     }
 }
