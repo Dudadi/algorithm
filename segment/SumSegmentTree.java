@@ -1,3 +1,5 @@
+package segment;
+
 public class SumSegmentTree {
     int[] arr;
     int n;

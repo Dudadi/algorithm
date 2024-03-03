@@ -1,7 +1,5 @@
 package String;
 
-import java.util.Arrays;
-
 public class LongestPalindrome {
     public static String longestPalindrome (String str) {
         int length = str.length();

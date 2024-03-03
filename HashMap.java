@@ -5,8 +5,6 @@
  * 2. 如果链式超长通过红黑树处理；
  * 3. 增加遍历函数
  * */
-package HashMap;
-
 public class HashMap<K,V>{
     static final float DEFAULT_LOAD_FACTOR = 0.75f;
     int capacity;

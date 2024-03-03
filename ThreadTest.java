@@ -5,7 +5,7 @@ package ThreadTest;
  *
  * @since 2022-01-28
  */
-public class Main {
+public class ThreadTest {
     public volatile static int val = 1;
     public static final int MAX_VAL = 30;
     static Object readLock = new Object();

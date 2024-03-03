@@ -1,3 +1,5 @@
+package String;
+
 class KMP {
     public int strStr(String haystack, String needle) {
         int[] next = getNext(needle);

@@ -1,7 +1,9 @@
-public class MinSegmentTreeCopy {
+package segment;
+
+public class MinSegmentTree {
     int[] arr;
     int n;
-    public MinSegmentTreeCopy(int[] arr) {
+    public MinSegmentTree(int[] arr) {
         this.n = arr.length;
         this.arr = new int[2*n];
         for(int i=n;i<2*n;i++) {
@@ -40,7 +42,7 @@ public class MinSegmentTreeCopy {
     }
     public static void main(String[] args) {
         System.out.println("hello MinSegmentTree");
-        MinSegmentTreeCopy tree = new MinSegmentTreeCopy(new int[]{7,5,3,9,8,1,10});
+        MinSegmentTree tree = new MinSegmentTree(new int[]{7,5,3,9,8,1,10});
         System.out.println(tree.getMin(0,0)); // 7
         System.out.println(tree.getMin(0,6)); // 1
         System.out.println(tree.getMin(1,4)); // 3

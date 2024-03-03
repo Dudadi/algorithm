@@ -4,19 +4,19 @@
  * 而调表skiplist查询的时间复杂度是O(n)。可以实现Set, sortedSet,map,sortedMap等数据结构。
  * 其原理是通过跳跃节点进行查询，加快查询速度。目前使用的项目有 redis,bigtable。
  * */
-package Skiplist;
+package SkipList;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Skiplist<K,V> {
+public class SkipList<K,V> {
     public int MAX_LEVEL = 10;
     public int curLevel;
     public int nodeCount;
     Node<K,V>head;
     Node<K,V>tail;
 
-    public Skiplist() {
+    public SkipList() {
         curLevel = 0;
         nodeCount = 0;
         head = new Node<>();
@@ -131,7 +131,7 @@ public class Skiplist<K,V> {
     public static void main(String[] args) {
         Integer i = 1, j = 2;
         System.out.println(i.compareTo(j));
-        Skiplist<Integer,String>skiplist = new Skiplist<Integer, String>();
+        SkipList<Integer,String>skiplist = new SkipList<Integer, String>();
         System.out.println(skiplist.insert(1,"1"));
         System.out.println(skiplist.insert(2,"2"));
         System.out.println(skiplist.insert(3,"3"));
